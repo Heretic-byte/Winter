@@ -33,17 +33,6 @@
 			"Enabled": true
 		},
 		{
-			"Name": "DBTween",
-			"Enabled": true,
-			"MarketplaceURL": "com.epicgames.launcher://ue/marketplace/content/bc7fcf7d4e60450ca51158289d355ff4",
-			"SupportedTargetPlatforms": [
-				"Mac",
-				"Win64",
-				"Android",
-				"IOS"
-			]
-		},
-		{
 			"Name": "OculusVR",
 			"Enabled": false,
 			"SupportedTargetPlatforms": [
