@@ -10,5 +10,6 @@ public class Winter2EditorTarget : TargetRules
 		Type = TargetType.Editor;
 		DefaultBuildSettings = BuildSettingsVersion.V2;
 		ExtraModuleNames.Add("Winter2");
+		ExtraModuleNames.AddRange(new string[] {"Winter2Editor"});
 	}
 }

@@ -10,5 +10,14 @@ public class Winter2Target : TargetRules
 		Type = TargetType.Game;
 		DefaultBuildSettings = BuildSettingsVersion.V2;
 		ExtraModuleNames.Add("Winter2");
+		
+		if (bBuildEditor)
+		{
+			ExtraModuleNames.AddRange( 
+				new string[]
+				{
+					"Winter2Editor"
+				});
+		}
 	}
 }
