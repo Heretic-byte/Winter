@@ -1,0 +1,8 @@
+{
+	"BuildId": "13144385",
+	"Modules": 
+	{
+		"NPCPalette": "UE4Editor-NPCPalette-Win64-DebugGame.dll",
+		"NPCPaletteEditor": "UE4Editor-NPCPaletteEditor-Win64-DebugGame.dll"
+	}
+}

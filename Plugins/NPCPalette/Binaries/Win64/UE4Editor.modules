@@ -1,0 +1,8 @@
+{
+	"BuildId": "17155196",
+	"Modules": 
+	{
+		"NPCPalette": "UE4Editor-NPCPalette.dll",
+		"NPCPaletteEditor": "UE4Editor-NPCPaletteEditor.dll"
+	}
+}
