@@ -31,11 +31,7 @@ AWinter2Character::AWinter2Character()
 	FirstPersonCameraComponent->SetRelativeLocation(FVector(-39.56f, 1.75f, 64.f)); // Position the camera
 	FirstPersonCameraComponent->bUsePawnControlRotation = true;
 
-	FP_Bow = CreateDefaultSubobject<UChildActorComponent>(TEXT("m_Bow"));
-	FP_Bow->SetupAttachment(FirstPersonCameraComponent);
-	FP_Bow->SetRelativeRotation(FRotator(0, -1.5, 0));
-	FP_Bow->SetRelativeLocation(FVector(79.5, 45.6, -5.7));//(X=79.500000,Y=45.599998,Z=-5.700012)
-	FP_Bow->SetChildActorClass(ABow::StaticClass());
+
 	
 	m_InterTarget = nullptr;
 
@@ -184,8 +180,19 @@ void AWinter2Character::SetArrowMaxCount(int max)
 
 void AWinter2Character::InitBow(int initMax)
 {
-	m_Bow =  Cast<ABow>(FP_Bow->GetChildActor());
+	FActorSpawnParameters Param;
+	Param.bNoFail = true;
 
+	m_Bow = GetWorld()->SpawnActor<ABow>(ABow::StaticClass(),Param);
+
+	FAttachmentTransformRules Rules(EAttachmentRule::SnapToTarget,EAttachmentRule::SnapToTarget,EAttachmentRule::KeepRelative,true);
+
+	m_Bow->AttachToComponent(FirstPersonCameraComponent,Rules);
+
+	m_Bow->SetActorRelativeLocation(FVector(79.5, 45.6, -5.7));
+
+	m_Bow->SetActorRelativeRotation(FRotator(0, -1.5, 0));
+	
 	SetArrowMaxCount(initMax);
 }
 
