@@ -39,6 +39,12 @@ protected:
 	float m_fVisionAngle;
 	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category = "APawn Animal Stats")
 	float m_fFoodExp;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	UAudioComponent* m_SoundComp;
+	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category = "APawn Animal Stats")
+	UAnimMontage* m_DeathMontage;
+
+	FTimerHandle m_DeathAnimTimer;
 	
 protected:
 	virtual void BeginPlay() override;
@@ -63,6 +69,13 @@ public:
 	void TryAttack();
 	
 	void StopMove();
+
+	virtual void OnHpZero() override;
+
+	virtual void TakeDmg(float dmg) override;
+
+	void OnDeathAnimEnd();
 };
+
 
 

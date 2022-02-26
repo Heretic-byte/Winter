@@ -17,13 +17,14 @@ ABaseCharacter::ABaseCharacter()
 	GetCharacterMovement()->bEnablePhysicsInteraction = false;
 	m_fHealth = 100;
 	m_fMoveSpeed = 600;
+	m_fCrnHealth = 0;
 }
 
 // Called when the game starts or when spawned
 void ABaseCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	
+	m_fCrnHealth = m_fHealth;
 }
 
 // Called every frame
@@ -42,7 +43,7 @@ void ABaseCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 
 bool ABaseCharacter::IsAlive()
 {
-	return true;
+	return m_fCrnHealth > 0;
 }
 
 bool ABaseCharacter::LineOfSightTo(const AActor* pawn)
@@ -85,4 +86,19 @@ float ABaseCharacter::GetSpeedPercentOne()
 	float VelSqr = GetMovementComponent()->Velocity.SizeSquared(); 
 	
 	return  VelSqr / MaxSqr;
+}
+
+void ABaseCharacter::TakeDmg(float dmg)
+{
+	m_fCrnHealth -= dmg;
+
+	if (m_fCrnHealth <= 0)
+	{
+		OnHpZero();
+	}
+}
+
+void ABaseCharacter::OnHpZero()
+{
+	
 }

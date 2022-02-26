@@ -13,6 +13,10 @@ AAnimal::AAnimal()
 
 	GetCharacterMovement()->bUseControllerDesiredRotation = true;
 	GetCharacterMovement()->RotationRate = FRotator(0,0,240);
+
+	m_SoundComp = CreateDefaultSubobject<UAudioComponent>(TEXT("m_SoundComp"));
+	m_SoundComp->SetupAttachment(RootComponent);
+	m_SoundComp->SetAutoActivate(false);
 }
 
 void AAnimal::BeginPlay()
@@ -99,4 +103,48 @@ void AAnimal::StopMove()
 	GetMovementComponent()->StopMovementImmediately();
 
 	GetPfComp()->AbortMove(*this, FPathFollowingResultFlags::ForcedScript | FPathFollowingResultFlags::NewRequest,FAIRequestID::CurrentRequest, EPathFollowingVelocityMode::Keep);
+}
+
+void AAnimal::OnHpZero()
+{
+	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+
+	GetMovementComponent()->SetComponentTickEnabled(false);
+	
+	if(m_DeathMontage)
+	{
+		PlayAnimMontage(m_DeathMontage);
+
+		float AnimLength = m_DeathMontage->GetPlayLength() - 0.4f;
+
+		GetWorldTimerManager().SetTimer(m_DeathAnimTimer, this, &AAnimal::OnDeathAnimEnd, AnimLength, false);
+	}
+	else
+	{
+		OnDeathAnimEnd();
+	}
+}
+
+void AAnimal::OnDeathAnimEnd()
+{
+	SetFocusedTarget(nullptr);
+	
+	GetMesh()->bPauseAnims = true;
+	
+	GetMesh()->SetSimulatePhysics(true);
+
+	PRINTF("AAnimal::OnDeathAnimEnd()");
+}
+
+void AAnimal::TakeDmg(float dmg)
+{
+	Super::TakeDmg(dmg);
+
+	m_SoundComp->Play();
+	
+	if(IsAlive())
+	{
+		
+	}
+	//PlaySound
 }
