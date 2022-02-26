@@ -20,6 +20,10 @@ ABow::ABow()
 	m_BowMesh->SetRelativeRotation(FRotator(0, -90.f, 0.f));
 
 	static ConstructorHelpers::FObjectFinder<USkeletalMesh> BowMesh(TEXT("SkeletalMesh'/Game/JungHo_Works/Bow.Bow'"));
+	static ConstructorHelpers::FClassFinder<UAnimInstance> BowAnim(TEXT("AnimBlueprint'/Game/JungHo_Works/ABP_BowAnim.ABP_BowAnim_C'"));
+
+	m_ClassAnim = BowAnim.Class;
+	//AnimBlueprint'/Game/JungHo_Works/ABP_BowAnim.ABP_BowAnim'
 	
 	m_BowMesh->SetSkeletalMesh(BowMesh.Object);
 
@@ -29,12 +33,17 @@ ABow::ABow()
 
 	m_BowMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	//SkeletalMesh'/Game/JungHo_Works/Bow.Bow'
+	m_fCharge = 0;
+	m_bIsCharging=false;
 }
 
 // Called when the game starts or when spawned
 void ABow::BeginPlay()
 {
 	Super::BeginPlay();
+
+	m_BowMesh->SetAnimationMode(EAnimationMode::AnimationBlueprint);
+	m_BowMesh->SetAnimClass(m_ClassAnim);
 
 	Reload();
 }
@@ -44,27 +53,38 @@ void ABow::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	if(m_bIsCharging && m_fCharge < 1.f)
+	{
+		m_fCharge+=DeltaTime;
+		PRINTF("Charge:%.1f",m_fCharge);
+	}
 }
 
 void ABow::BeginCharge()
 {
+	m_fCharge = 0;
+
+	m_bIsCharging=true;
 }
 
 void ABow::EndCharge()
 {
-	Fire();
+	if(m_fCharge<0.15f)
+	{
+		PRINTF("Cancel Charge");
+		StopCharge();
+		return;
+	}
+	PRINTF("Fire:%.1f",m_fCharge);
+	m_Bullet->Fire(m_fCharge);
+
+	StopCharge();
 }
 
 void ABow::StopCharge()
 {
-	
-}
-
-void ABow::Fire()
-{
-	PRINTF("ABow::Fire()");
-	
-	m_Bullet->Fire(0.7f);
+	m_fCharge = 0;
+	m_bIsCharging=false;
 }
 
 FVector ABow::GetBulletStartPoint()
@@ -87,5 +107,10 @@ void ABow::Reload()
 	FAttachmentTransformRules Rules(EAttachmentRule::SnapToTarget,EAttachmentRule::SnapToTarget,EAttachmentRule::KeepWorld,true);
 
 	m_Bullet->AttachToComponent(m_BowMesh,Rules,TEXT("Start"));
+}
+
+float ABow::GetCharge()
+{
+	return m_fCharge;
 }
 

@@ -22,7 +22,13 @@ protected:
 	TSubclassOf<AWinter2Projectile> m_ClassBullet;
 	UPROPERTY()
 	AWinter2Projectile* m_Bullet;
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<UAnimInstance> m_ClassAnim;
 	
+	UPROPERTY()
+	float m_fCharge;
+	UPROPERTY()
+	bool m_bIsCharging;
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -41,7 +47,7 @@ public:
 
 	void StopCharge();
 
-	void Fire();
-
 	void Reload();
+
+	float GetCharge();
 };

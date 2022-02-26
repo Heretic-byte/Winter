@@ -70,4 +70,6 @@ void AWinter2Projectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor,
 	{
 		AttachToComponent(OtherComp,Rules);	
 	}
+
+	CollisionComp->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 }
