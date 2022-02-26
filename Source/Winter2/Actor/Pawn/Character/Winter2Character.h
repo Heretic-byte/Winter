@@ -84,6 +84,9 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void SetArrowMaxCount(int max);
+	
+	UFUNCTION(BlueprintCallable)
+	void InitBow(int initMax);
 
 	virtual bool HasTarget() override;
 

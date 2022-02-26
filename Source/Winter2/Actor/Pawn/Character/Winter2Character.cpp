@@ -44,8 +44,7 @@ AWinter2Character::AWinter2Character()
 void AWinter2Character::BeginPlay()
 {
 	Super::BeginPlay();
-	
-	m_Bow =  Cast<ABow>(FP_Bow->GetChildActor());
+	//InitBow(5);
 }
 
 void AWinter2Character::Tick(float DeltaSeconds)
@@ -176,6 +175,13 @@ void AWinter2Character::RecoverArrowCount() const
 void AWinter2Character::SetArrowMaxCount(int max)
 {
 	m_Bow->SetMaxArrow(max);
+}
+
+void AWinter2Character::InitBow(int initMax)
+{
+	m_Bow =  Cast<ABow>(FP_Bow->GetChildActor());
+
+	SetArrowMaxCount(initMax);
 }
 
 bool AWinter2Character::HasTarget()
