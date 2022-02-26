@@ -16,6 +16,8 @@ void UMenuCanvas::NativeOnInitialized()
 	m_BtnClose->OnClicked.AddDynamic(this, &UMenuCanvas::OnClose);
 
 	SetVisibility(ESlateVisibility::Collapsed);
+
+	m_ImgWinBG->SetVisibility(ESlateVisibility::Collapsed);
 }
 
 void UMenuCanvas::OpenAsPause()
@@ -46,8 +48,10 @@ void UMenuCanvas::OpenAsWin()
 	UMyLib::GetPlayerCon()->bShowMouseCursor = true;
 
 	m_TextMenu->SetText(FText::FromString(TEXT("생존 성공!")));
-}
 
+	m_ImgWinBG->SetVisibility(ESlateVisibility::SelfHitTestInvisible);
+}
+//SoundWave'/Game/Audio/BGM_End.BGM_End'
 void UMenuCanvas::OpenAsLose()
 {
 	if(IsVisible())

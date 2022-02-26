@@ -21,7 +21,7 @@ AWinter2GameMode::AWinter2GameMode()
 	m_fGameWinTime = 600;
 	
 #if !UE_BUILD_SHIPPING
-	m_fGameWinTime = 40;
+	m_fGameWinTime = 20;
 #endif
 }
 

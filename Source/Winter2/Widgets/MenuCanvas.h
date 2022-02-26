@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
 #include "Components/Button.h"
+#include "Components/Image.h"
 #include "Components/TextBlock.h"
 #include "MenuCanvas.generated.h"
 
@@ -27,8 +28,8 @@ protected:
 	UButton* m_BtnExitGame;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (BindWidget,AllowPrivateAccess = "true"))
 	UButton* m_BtnClose;
-
-	
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (BindWidget,AllowPrivateAccess = "true"))
+	UImage* m_ImgWinBG;
 protected:
 	virtual void NativeOnInitialized() override;
 
