@@ -17,13 +17,13 @@ ABow::ABow()
 	m_BowMesh->SetupAttachment(RootComponent);
 	m_BowMesh->bCastDynamicShadow = false;
 	m_BowMesh->CastShadow = false;
-	m_BowMesh->SetRelativeRotation(FRotator(0, -90.f, 0.f));
+	m_BowMesh->SetRelativeScale3D(FVector(0.2));
+	//(X=0.650000,Y=0.650000,Z=0.650000)
 
-	static ConstructorHelpers::FObjectFinder<USkeletalMesh> BowMesh(TEXT("SkeletalMesh'/Game/JungHo_Works/Bow.Bow'"));
-	static ConstructorHelpers::FClassFinder<UAnimInstance> BowAnim(TEXT("AnimBlueprint'/Game/JungHo_Works/ABP_BowAnim.ABP_BowAnim_C'"));
+	static ConstructorHelpers::FObjectFinder<USkeletalMesh> BowMesh(TEXT("SkeletalMesh'/Game/NeetKing_Works/Model/SM_Bow/SM_Bow.SM_Bow'"));
+	static ConstructorHelpers::FClassFinder<UAnimInstance> BowAnim(TEXT("AnimBlueprint'/Game/NeetKing_Works/Model/SM_Bow/ABP_NewBowAnim.ABP_NewBowAnim_C'"));
 
 	m_ClassAnim = BowAnim.Class;
-	//AnimBlueprint'/Game/JungHo_Works/ABP_BowAnim.ABP_BowAnim'
 	
 	m_BowMesh->SetSkeletalMesh(BowMesh.Object);
 

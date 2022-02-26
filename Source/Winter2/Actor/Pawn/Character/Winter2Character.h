@@ -36,8 +36,6 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Camera)
 	float BaseLookUpRate;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Gameplay)
-	FVector GunOffset;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Gameplay)
 	USoundBase* FireSound;
 	UPROPERTY(VisibleDefaultsOnly, Category = Mesh)
 	UChildActorComponent* FP_Bow;
