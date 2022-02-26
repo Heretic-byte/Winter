@@ -18,6 +18,8 @@ void UMyGameInstance::Init()
 
 void UMyGameInstance::LoadComplete(const float LoadTime, const FString& MapName)
 {
+	SetPlayerWinFalse();
+	
 	if(MapName!=TEXT("InitLevel"))
 	{
 		if(m_ZoneMoveManager->IsGameStart())

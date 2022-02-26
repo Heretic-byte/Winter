@@ -15,9 +15,13 @@ void UMenuCanvas::NativeOnInitialized()
 
 	m_BtnClose->OnClicked.AddDynamic(this, &UMenuCanvas::OnClose);
 
-	SetVisibility(ESlateVisibility::Collapsed);
-
 	m_ImgWinBG->SetVisibility(ESlateVisibility::Collapsed);
+	
+	//SetVisibility(ESlateVisibility::Collapsed);
+
+	UMyLib::GetPlayerCon()->bShowMouseCursor = true;
+
+	UGameplayStatics::SetGamePaused(GetWorld(),true);
 }
 
 void UMenuCanvas::OpenAsPause()
@@ -76,7 +80,6 @@ void UMenuCanvas::OnBackTitle()
 void UMenuCanvas::OnRestartNewGame()
 {
 	OnClose();
-	UMyGameInstance::Get->SetPlayerWinFalse();
 	UMyGameInstance::Get->StartGame();
 }
 
@@ -87,6 +90,7 @@ void UMenuCanvas::OnExitGame()
 
 void UMenuCanvas::OnClose()
 {
+	m_CanvasTutorial->SetVisibility(ESlateVisibility::Collapsed);
 	UGameplayStatics::SetGamePaused(GetWorld(),false);
 	SetVisibility(ESlateVisibility::Collapsed);
 	UMyLib::GetPlayerCon()->SetInputMode(FInputModeGameOnly());
