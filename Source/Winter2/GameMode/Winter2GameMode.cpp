@@ -20,9 +20,9 @@ AWinter2GameMode::AWinter2GameMode()
 	
 	m_fGameWinTime = 600;
 	
-#if !UE_BUILD_SHIPPING
-	m_fGameWinTime = 20;
-#endif
+//#if !UE_BUILD_SHIPPING
+//	m_fGameWinTime = 20;
+//#endif
 }
 
 void AWinter2GameMode::Tick(float DeltaSeconds)

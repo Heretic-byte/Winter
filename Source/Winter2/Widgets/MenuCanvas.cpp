@@ -69,11 +69,13 @@ void UMenuCanvas::OpenAsLose()
 
 void UMenuCanvas::OnBackTitle()
 {
+	OnClose();
 	UMyGameInstance::Get->OpenMap(TEXT("InitLevel"));
 }
 
 void UMenuCanvas::OnRestartNewGame()
 {
+	OnClose();
 	UMyGameInstance::Get->StartGame();
 }
 
