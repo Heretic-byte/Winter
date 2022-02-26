@@ -4,6 +4,7 @@
 
 #include "NavigationSystem.h"
 #include "Navigation/PathFollowingComponent.h"
+#include "Winter2/MyLib.h"
 #include "Winter2/Winter2.h"
 #include "Winter2/Actor/Pawn/Character/Animal.h"
 #include "Winter2/Actor/Pawn/Character/BaseCharacter.h"
@@ -14,7 +15,7 @@ void UAI_Flee::Init(AAnimal* pawnUnit)
 
 	m_fIdleTimer = -1.f;
 
-	m_fChaseFindTimer = -1.f;
+	m_fFleeTimer = -1.f;
 
 	m_CurrentState = EFSM::Idle;
 
@@ -24,10 +25,8 @@ void UAI_Flee::Init(AAnimal* pawnUnit)
 	//
 	m_AryStateFunction[static_cast<int>(EFSM::Idle)] = &UAI_Flee::OnIdle;
 
-	m_AryStateFunction[static_cast<int>(EFSM::Chase)] = &UAI_Flee::OnChase;
+	m_AryStateFunction[static_cast<int>(EFSM::Flee)] = &UAI_Flee::OnFlee;
 
-	m_AryStateFunction[static_cast<int>(EFSM::Combat)] = &UAI_Flee::OnCombat;
-	//
 	ResetStartPosition(m_Owner->GetActorLocation());
 }
 
@@ -52,7 +51,7 @@ void UAI_Flee::SetIdle()
 
 	m_Owner->SetFocusedTarget(nullptr);
 		
-	m_Owner->StopMove();
+	//m_Owner->StopMove();
 }
 
 void UAI_Flee::CheckSetState()
@@ -72,15 +71,14 @@ void UAI_Flee::CheckSetState()
 			return;
 		}
 
-		float Range = GetAttackRangeSqr();
-
-		if (!CheckTargetRange(Range))
+		if (!CheckTargetRange(m_fAttackRangeSqr))
 		{
-			m_CurrentState = EFSM::Chase;
-			return;
-		}	
-
-		m_CurrentState = EFSM::Combat;
+			SetIdle();
+		}
+		else
+		{
+			m_CurrentState = EFSM::Flee;
+		}
 	}
 }
 
@@ -90,12 +88,9 @@ FString UAI_Flee::CurrentState()
 	{
 	case Idle: return TEXT("Idle");
 		break;
-	case Chase: return TEXT("Chase");
-		break;
-	case Combat: return TEXT("Combat");
+	case Flee: return TEXT("Flee");
 		break;
 	}
-
 	return TEXT("None");
 }
 
@@ -112,11 +107,9 @@ void UAI_Flee::OnIdle()
 
 	FNavLocation Result;
 
-	UNavigationSystemV1* NavSys = FNavigationSystem::GetCurrent<UNavigationSystemV1>(GetWorld());
-
 	if (EPathFollowingStatus::Idle == Status)
 	{
-		if (!NavSys->GetRandomPointInNavigableRadius(m_StartPoint, 400.f, Result))
+		if (!UMyLib::GetNavSys()->GetRandomPointInNavigableRadius(m_StartPoint, 1400.f, Result))
 		{
 			return;
 		}
@@ -127,21 +120,32 @@ void UAI_Flee::OnIdle()
 	}
 }
 
-void UAI_Flee::OnChase()
+void UAI_Flee::OnFlee()
 {
-	EPathFollowingRequestResult::Type Result = EPathFollowingRequestResult::Failed;
-
-	Result = m_Owner->MoveToActor(m_Owner->GetFocusedTarget());
-}
-
-void UAI_Flee::OnCombat()
-{
-	m_Owner->HomingRotateToTarget();
-
-	if(CheckAngle(60))
+	if (m_fFleeTimer > 0.f)
 	{
-		m_Owner->TryAttack();
+		m_fFleeTimer -= m_fDeltaTime;
+
+		return;
 	}
+	FVector RunDir = (m_Owner->GetActorLocation() - m_Owner->GetFocusedTarget()->GetActorLocation()).GetSafeNormal2D();
+
+	float RandDistLen = FMath::RandRange(1500,3000);
+
+	float RandRad = FMath::RandRange(1700,2400);
+
+	RunDir *= RandDistLen;
+
+	FNavLocation Result;
+
+	if (!UMyLib::GetNavSys()->GetRandomPointInNavigableRadius(m_Owner->GetActorLocation() + RunDir, RandRad, Result))
+	{
+		return;
+	}
+	
+	m_fFleeTimer = FMath::FRandRange(1.f, 2.f);
+	
+	m_Owner->MoveToLocation(Result);
 }
 
 void UAI_Flee::ResetStartPosition(FVector loc)

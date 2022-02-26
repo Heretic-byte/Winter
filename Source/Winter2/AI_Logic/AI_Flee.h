@@ -19,8 +19,7 @@ public:
 	enum EFSM
 	{
 		Idle,
-		Chase,
-		Combat,
+		Flee,
 		Length
 	};
 
@@ -31,7 +30,7 @@ protected:
 
 	float m_fIdleTimer;
 
-	float m_fChaseFindTimer;
+	float m_fFleeTimer;
 
 	float m_fAttackRange; //from startPos
 
@@ -50,10 +49,8 @@ protected:
 	
 	void OnIdle();
 
-	void OnChase();
+	virtual void OnFlee();
 	
-	void OnCombat();
-
 public:
 	virtual void Init(AAnimal* owner) override;
 	
@@ -62,14 +59,4 @@ public:
 	void SetIdle();
 
 	void ResetStartPosition(FVector loc);
-	
-	FORCEINLINE float GetAttackRange()
-	{
-		return m_fAttackRange;
-	}
-
-	FORCEINLINE float GetAttackRangeSqr()
-	{
-		return m_fAttackRangeSqr;
-	}
 };

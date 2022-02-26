@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "Winter2/Animation/MyAnimInstance.h"
 #include "BaseCharacter.generated.h"
 
 UCLASS()
@@ -35,4 +36,6 @@ public:
 	bool LineOfSightTo(const AActor* pawn);
 	
 	void SetActive(bool isActive);
+	
+	float GetSpeedPercentOne();
 };

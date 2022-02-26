@@ -3,6 +3,8 @@
 
 #include "BaseCharacter.h"
 
+#include "GameFramework/PawnMovementComponent.h"
+
 // Sets default values
 ABaseCharacter::ABaseCharacter()
 {
@@ -73,4 +75,13 @@ void ABaseCharacter::SetActive(bool isActive)
 		Comp->Activate(isActive);
 		Comp->SetComponentTickEnabled(isActive);
 	}
+}
+
+float ABaseCharacter::GetSpeedPercentOne()
+{
+	float MaxSqr = GetMovementComponent()->GetMaxSpeed() * GetMovementComponent()->GetMaxSpeed();
+
+	float VelSqr = GetMovementComponent()->Velocity.SizeSquared(); 
+	
+	return  VelSqr / MaxSqr;
 }
