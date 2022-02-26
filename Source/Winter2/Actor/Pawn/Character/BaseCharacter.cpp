@@ -9,6 +9,11 @@ ABaseCharacter::ABaseCharacter()
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
+	GetMesh()->SetRelativeLocation(FVector(0, 0, -88));
+	GetMesh()->SetRelativeRotation(FRotator(0, -90.f, 0.f));
+
+	m_fHealth = 100;
+	m_fMoveSpeed = 600;
 }
 
 // Called when the game starts or when spawned
@@ -32,3 +37,40 @@ void ABaseCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 
 }
 
+bool ABaseCharacter::IsAlive()
+{
+	return true;
+}
+
+bool ABaseCharacter::LineOfSightTo(const AActor* pawn)
+{
+	if (!pawn)
+	{
+		return false;
+	}
+
+	FVector ViewPoint = GetActorLocation();
+
+	FCollisionQueryParams CollisionParms(SCENE_QUERY_STAT(LineOfSight), false, pawn);
+	
+	CollisionParms.AddIgnoredActor(this);
+	
+	FVector TargetLocation = pawn->GetActorLocation();
+	
+	bool bHit = GetWorld()->LineTraceTestByChannel(ViewPoint, TargetLocation, ECC_Visibility, CollisionParms);
+	
+	return !bHit;
+}
+
+void ABaseCharacter::SetActive(bool isActive)
+{
+	SetHidden(!isActive);
+
+	SetActorTickEnabled(isActive);
+	
+	for(auto Comp : GetComponents())
+	{
+		Comp->Activate(isActive);
+		Comp->SetComponentTickEnabled(isActive);
+	}
+}

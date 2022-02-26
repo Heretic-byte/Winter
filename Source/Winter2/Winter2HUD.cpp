@@ -33,3 +33,15 @@ void AWinter2HUD::DrawHUD()
 	TileItem.BlendMode = SE_BLEND_Translucent;
 	Canvas->DrawItem( TileItem );
 }
+
+void AWinter2HUD::BeginPlay()
+{
+	Super::BeginPlay();
+	
+	//m_Canvas = CreateWidget<UMainCanvas>(GetWorld(), m_ClassWidget);
+	//
+	//if(m_Canvas)
+	//{
+	//	m_Canvas->AddToViewport();
+	//}
+}

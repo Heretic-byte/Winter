@@ -21,5 +21,7 @@ private:
 	/** Crosshair asset pointer */
 	class UTexture2D* CrosshairTex;
 
+protected:
+	virtual void BeginPlay() override;
 };
 

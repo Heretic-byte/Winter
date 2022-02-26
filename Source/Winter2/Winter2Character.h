@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Actor/Pawn/Character/BaseCharacter.h"
 #include "GameFramework/Character.h"
 #include "Winter2Character.generated.h"
 
@@ -15,7 +16,7 @@ class UAnimMontage;
 class USoundBase;
 
 UCLASS(config=Game)
-class AWinter2Character : public ACharacter
+class AWinter2Character : public ABaseCharacter
 {
 	GENERATED_BODY()
 
