@@ -10,8 +10,8 @@
 #include "Perception/AISense_Team.h"
 #include "Perception/PawnSensingComponent.h"
 #include "Winter2/MyLib.h"
-#include "Winter2/Winter2Character.h"
 #include "Winter2/Actor/Pawn/Character/Animal.h"
+#include "Winter2/Actor/Pawn/Character/Winter2Character.h"
 
 
 USensor_Base::USensor_Base()
@@ -208,7 +208,7 @@ ABaseCharacter* USensor_Base::GetSensedPawn()
 {
 	AWinter2Character* Player = UMyLib::GetPlayer();
 	
-	if (CheckIsHidden(Player))
+	if (Player&&CheckIsHidden(Player))
 	{
 		return nullptr;
 	}
