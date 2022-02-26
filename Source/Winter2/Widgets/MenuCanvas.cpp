@@ -76,6 +76,7 @@ void UMenuCanvas::OnBackTitle()
 void UMenuCanvas::OnRestartNewGame()
 {
 	OnClose();
+	UMyGameInstance::Get->SetPlayerWinFalse();
 	UMyGameInstance::Get->StartGame();
 }
 

@@ -38,4 +38,6 @@ public:
 	void WinGame();
 
 	bool IsPlayerWin();
+
+	void  SetPlayerWinFalse();
 };

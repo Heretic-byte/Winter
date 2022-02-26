@@ -54,3 +54,8 @@ bool UMyGameInstance::IsPlayerWin()
 {
 	return m_bIsPlayerWin;
 }
+
+void UMyGameInstance::SetPlayerWinFalse()
+{
+	m_bIsPlayerWin = false;
+}
