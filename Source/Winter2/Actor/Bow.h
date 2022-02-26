@@ -24,6 +24,12 @@ protected:
 	AWinter2Projectile* m_Bullet;
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<UAnimInstance> m_ClassAnim;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	UAudioComponent* m_SoundComp;
+	UPROPERTY()
+	USoundBase* m_ChargingSound;
+	UPROPERTY()
+	USoundBase* m_ShootingSound;
 	
 	UPROPERTY()
 	float m_fCharge;
@@ -65,4 +71,9 @@ public:
 	int GetCrnArrowCount();
 
 	int GetMaxArrowCount();
+
+protected:
+	void PlayChargeSound();
+
+	void PlayShootSound();
 };

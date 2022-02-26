@@ -4,6 +4,7 @@
 #include "InitGameMode.h"
 
 #include "Blueprint/UserWidget.h"
+#include "Winter2/Actor/InitPlayerController.h"
 #include "Winter2/Actor/MyPlayerController.h"
 #include "Winter2/Widgets/TitleCanvas.h"
 
@@ -14,7 +15,7 @@ AInitGameMode::AInitGameMode()
 	//WidgetBlueprint'/Game/BP/Widgets/WB_Title.WB_Title'
 	HUDClass = nullptr;
 	DefaultPawnClass=nullptr;
-	PlayerControllerClass = AMyPlayerController::StaticClass();
+	PlayerControllerClass = AInitPlayerController::StaticClass();
 }
 
 void AInitGameMode::BeginPlay()

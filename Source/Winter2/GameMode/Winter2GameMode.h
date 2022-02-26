@@ -6,6 +6,7 @@
 #include "GameFramework/GameModeBase.h"
 #include "Winter2GameMode.generated.h"
 
+class AMyPlayerController;
 UCLASS(minimalapi)
 class AWinter2GameMode : public AGameModeBase
 {

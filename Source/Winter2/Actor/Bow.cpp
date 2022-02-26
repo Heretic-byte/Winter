@@ -36,6 +36,17 @@ ABow::ABow()
 	m_fCharge = 0;
 	m_bIsCharging=false;
 	m_nArrowMaxCount = 5;
+
+	m_SoundComp = CreateDefaultSubobject<UAudioComponent>(TEXT("m_SoundComp"));
+	m_SoundComp->SetupAttachment(RootComponent);
+	m_SoundComp->SetAutoActivate(false);
+
+	static ConstructorHelpers::FObjectFinder<USoundBase> Sound01(TEXT("SoundWave'/Game/Audio/Audio_Arrow_Stand.Audio_Arrow_Stand'"));
+	static ConstructorHelpers::FObjectFinder<USoundBase> Sound02(TEXT("SoundWave'/Game/Audio/Audio_Arrow_Shot.Audio_Arrow_Shot'"));
+
+	m_ChargingSound = Sound01.Object;
+
+	m_ShootingSound = Sound02.Object;
 }
 
 // Called when the game starts or when spawned
@@ -69,6 +80,8 @@ void ABow::BeginCharge()
 	m_fCharge = 0;
 
 	m_bIsCharging=true;
+
+	PlayChargeSound();
 }
 
 void ABow::EndCharge()
@@ -81,6 +94,7 @@ void ABow::EndCharge()
 	}
 	m_Bullet->Fire(m_fCharge);
 	m_Bullet = nullptr;
+	PlayShootSound();
 	
 	StopCharge();
 
@@ -158,5 +172,17 @@ int ABow::GetCrnArrowCount()
 int ABow::GetMaxArrowCount()
 {
 	return m_nArrowMaxCount;
+}
+
+void ABow::PlayChargeSound()
+{
+	m_SoundComp->SetSound(m_ChargingSound);
+	m_SoundComp->Play();
+}
+
+void ABow::PlayShootSound()
+{
+	m_SoundComp->SetSound(m_ShootingSound);
+	m_SoundComp->Play();
 }
 

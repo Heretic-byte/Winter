@@ -29,9 +29,14 @@ void UMyGameInstance::LoadComplete(const float LoadTime, const FString& MapName)
 
 void UMyGameInstance::StartGame()
 {
-	m_ZoneMoveManager->OpenMyLevel(TEXT("WinterLevel"));
+	OpenMap(TEXT("WinterLevel"));
 
 	UKismetSystemLibrary::ControlScreensaver(false);
+}
+
+void UMyGameInstance::OpenMap(FName mapName)
+{
+	m_ZoneMoveManager->OpenMyLevel(mapName);
 }
 
 void UMyGameInstance::ExitGame()

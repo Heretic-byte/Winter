@@ -37,7 +37,7 @@ protected:
 	float BaseLookUpRate;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Gameplay)
 	USoundBase* FireSound;
-	UPROPERTY(VisibleDefaultsOnly, Category = Mesh)
+	UPROPERTY(VisibleAnywhere,BlueprintReadWrite, Category = Gameplay)
 	UParticleSystemComponent* m_SnowEffect;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	UCameraComponent* FirstPersonCameraComponent;

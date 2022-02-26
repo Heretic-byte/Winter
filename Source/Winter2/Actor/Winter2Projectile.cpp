@@ -41,7 +41,7 @@ AWinter2Projectile::AWinter2Projectile()
 
 	static ConstructorHelpers::FObjectFinder<USoundBase> FoundSound(TEXT("SoundWave'/Game/JungHo_Works/Use/Fantasy_Game_Weapon_Impact.Fantasy_Game_Weapon_Impact'"));
 	
-	
+	m_SoundComp->SetSound(FoundSound.Object);
 }
 
 void AWinter2Projectile::Fire(float powerMaxOne)

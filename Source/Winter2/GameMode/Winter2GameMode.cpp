@@ -4,18 +4,25 @@
 #include "UObject/ConstructorHelpers.h"
 #include "Winter2/Managers/MyGameInstance.h"
 #include "Winter2/Widgets/Winter2HUD.h"
+#include "Winter2/Actor/MyPlayerController.h"
 
 AWinter2GameMode::AWinter2GameMode()
 	: Super()
 {
-	// set default pawn class to our Blueprinted character
+
+	PlayerControllerClass = AMyPlayerController::StaticClass();
+
 	static ConstructorHelpers::FClassFinder<APawn> PlayerPawnClassFinder(TEXT("/Game/FirstPersonCPP/Blueprints/FirstPersonCharacter"));
 	DefaultPawnClass = PlayerPawnClassFinder.Class;
 	// use our custom HUD class
 	HUDClass = AWinter2HUD::StaticClass();
 	m_fTimePassed = 0;
+	
 	m_fGameWinTime = 600;
 	
+#if !UE_BUILD_SHIPPING
+	m_fGameWinTime = 40;
+#endif
 }
 
 void AWinter2GameMode::Tick(float DeltaSeconds)

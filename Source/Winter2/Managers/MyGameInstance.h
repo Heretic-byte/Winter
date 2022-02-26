@@ -31,6 +31,8 @@ public:
 	
 	void StartGame();
 
+	void OpenMap(FName mapName);
+
 	void ExitGame();
 	
 	void WinGame();

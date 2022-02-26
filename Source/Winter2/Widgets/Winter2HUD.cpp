@@ -14,6 +14,10 @@ AWinter2HUD::AWinter2HUD()
 	// Set the crosshair texture
 	static ConstructorHelpers::FObjectFinder<UTexture2D> CrosshairTexObj(TEXT("/Game/FirstPerson/Textures/FirstPersonCrosshair"));
 	CrosshairTex = CrosshairTexObj.Object;
+
+	static ConstructorHelpers::FClassFinder<UUserWidget> CanvasFound(TEXT("WidgetBlueprint'/Game/BP/Widgets/WB_MenuCanvas.WB_MenuCanvas_C'"));
+	//WidgetBlueprint'/Game/BP/Widgets/WB_MenuCanvas.WB_MenuCanvas'
+	m_ClassMenu = CanvasFound.Class;	
 }
 
 
@@ -50,10 +54,25 @@ void AWinter2HUD::BeginPlay()
 {
 	Super::BeginPlay();
 	
-	//m_Canvas = CreateWidget<UMainCanvas>(GetWorld(), m_ClassWidget);
+	m_Canvas = CreateWidget<UMenuCanvas>(GetWorld(), m_ClassMenu);
 	//
-	//if(m_Canvas)
-	//{
-	//	m_Canvas->AddToViewport();
-	//}
+	if(m_Canvas)
+	{
+		m_Canvas->AddToViewport();
+	}
+}
+
+void AWinter2HUD::OpenAsPause()
+{
+	m_Canvas->OpenAsPause();
+}
+
+void AWinter2HUD::OpenAsWin()
+{
+	m_Canvas->OpenAsWin();
+}
+
+void AWinter2HUD::OpenAsLose()
+{
+	m_Canvas->OpenAsLose();
 }
