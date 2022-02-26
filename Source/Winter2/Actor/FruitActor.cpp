@@ -15,11 +15,16 @@ AFruitActor::AFruitActor()
 	m_Coll->InitCapsuleSize(60,130);
 	m_Coll->SetCollisionProfileName(TEXT("OverlapAll"));
 	m_Coll->SetCollisionResponseToChannel(ECollisionChannel::ECC_Visibility,ECollisionResponse::ECR_Block);
+	m_Coll->SetCanEverAffectNavigation(false);
 	RootComponent = m_Coll;
 
 	m_Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("m_Mesh"));
 	m_Mesh->SetupAttachment(m_Coll);
+	m_Mesh->SetRelativeLocation(FVector(0,0,-130));
 	m_Mesh->SetCollisionProfileName(TEXT("NoCollision"));
+
+	static ConstructorHelpers::FObjectFinder<UStaticMesh> FoundM(TEXT("StaticMesh'/Game/NeetKing_Works/Model/SM_Fruit/SM_Fruit.SM_Fruit'"));
+	m_Mesh->SetStaticMesh(FoundM.Object);
 }
 
 void AFruitActor::OnInteract()
