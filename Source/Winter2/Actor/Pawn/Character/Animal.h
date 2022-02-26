@@ -50,6 +50,8 @@ protected:
 	UAnimMontage* m_DeathMontage;
 	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category = "APawn Animal Stats")
 	UAnimMontage* m_AttackMontage;
+	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category = "APawn Animal Stats")
+	TArray<UAnimMontage*> m_AryIdleAnim;
 
 	FTimerHandle m_DeathAnimTimer;
 
@@ -92,6 +94,8 @@ public:
 	virtual bool HasTarget() override;
 
 	virtual void OnInteract() override;
+
+	void PlayRandIdleMotion();
 };
 
 

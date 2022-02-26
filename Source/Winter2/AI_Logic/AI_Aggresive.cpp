@@ -113,6 +113,15 @@ void UAI_Aggresive::OnIdle()
 		return;
 	}
 
+	int RandIndex = FMath::RandRange(0,4);
+
+	if(RandIndex == 0)
+	{
+		m_Owner->PlayRandIdleMotion();
+		m_fIdleTimer = FMath::FRandRange(3.f, 7.f);
+		return;
+	}
+
 	FNavLocation Result;
 
 	UNavigationSystemV1* NavSys = FNavigationSystem::GetCurrent<UNavigationSystemV1>(GetWorld());

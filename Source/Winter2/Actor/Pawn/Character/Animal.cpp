@@ -211,3 +211,14 @@ void AAnimal::OnInteract()
 
 	Destroy();
 }
+
+void AAnimal::PlayRandIdleMotion()
+{
+	if(m_AryIdleAnim.Num()<1)
+	{
+		return;
+	}
+	int RandIndex = FMath::RandRange(0,m_AryIdleAnim.Num() -1);
+
+	PlayAnimMontage(m_AryIdleAnim[RandIndex]);
+}

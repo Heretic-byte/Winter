@@ -7,6 +7,7 @@
 #include "Components/InputComponent.h"
 #include "GameFramework/InputSettings.h"
 #include "Kismet/GameplayStatics.h"
+#include "Particles/ParticleSystemComponent.h"
 #include "Winter2/Interactable.h"
 #include "Winter2/Actor/Winter2Projectile.h"
 #include "Winter2/Managers/MyGameInstance.h"
@@ -37,7 +38,13 @@ AWinter2Character::AWinter2Character()
 	FP_Bow->SetChildActorClass(ABow::StaticClass());
 	
 	m_InterTarget = nullptr;
-}
+
+	static ConstructorHelpers::FObjectFinder<UParticleSystem> FoundEffect(TEXT("ParticleSystem'/Game/Effects/Fx_Snow/ParticleSystems/P_cameraParentedSnowBox.P_cameraParentedSnowBox'"));
+	
+	m_SnowEffect = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("m_SnowEffect"));
+	m_SnowEffect->SetupAttachment(RootComponent);
+	m_SnowEffect->SetTemplate(FoundEffect.Object);
+}//ParticleSystem'/Game/Effects/Fx_Snow/ParticleSystems/P_cameraParentedSnowBox.P_cameraParentedSnowBox'
 
 void AWinter2Character::BeginPlay()
 {
