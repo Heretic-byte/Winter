@@ -3,6 +3,8 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Components/CapsuleComponent.h"
+#include "Components/SphereComponent.h"
 #include "GameFramework/Actor.h"
 #include "Winter2/Interactable.h"
 #include "FruitActor.generated.h"
@@ -19,17 +21,13 @@ public:
 protected:
 	UPROPERTY(EditAnywhere,BlueprintReadWrite)
 	float m_fFoddExp;
-
-protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
-
+	UPROPERTY(VisibleAnywhere,BlueprintReadWrite)
+	UCapsuleComponent* m_Coll;
+	UPROPERTY(VisibleAnywhere,BlueprintReadWrite)
+	UStaticMeshComponent* m_Mesh;
+	
 public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
-
 	virtual void OnInteract() override;
-
 };
 
 

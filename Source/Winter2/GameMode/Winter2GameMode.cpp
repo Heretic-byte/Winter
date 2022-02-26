@@ -15,6 +15,7 @@ AWinter2GameMode::AWinter2GameMode()
 	HUDClass = AWinter2HUD::StaticClass();
 	m_fTimePassed = 0;
 	m_fGameWinTime = 600;
+	
 }
 
 void AWinter2GameMode::Tick(float DeltaSeconds)

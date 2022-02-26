@@ -19,14 +19,13 @@ AWinter2Projectile::AWinter2Projectile()
 	CollisionComp->CanCharacterStepUpOn = ECB_No;
 	RootComponent = CollisionComp;
 	
-	static ConstructorHelpers::FObjectFinder<UStaticMesh> Found(TEXT("StaticMesh'/Game/JungHo_Works/Arrow.Arrow'"));
+	static ConstructorHelpers::FObjectFinder<UStaticMesh> Found(TEXT("StaticMesh'/Game/NeetKing_Works/Model/SM_Bow/SM_Bow_arrow.SM_Bow_arrow'"));
 
 	m_Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("m_Mesh"));
 	m_Mesh->SetupAttachment(RootComponent);
 	m_Mesh->SetStaticMesh(Found.Object);
-	m_Mesh->SetRelativeScale3D(FVector(1,5,5));
-	m_Mesh->SetRelativeRotation(FRotator(0,0,0));
-	m_Mesh->SetRelativeLocation(FVector(-70,0,0));
+	m_Mesh->SetRelativeScale3D(FVector(0.3,0.8,0.8));
+	m_Mesh->SetRelativeLocation(FVector(-30,0,0));
 	m_Mesh->SetCollisionProfileName(TEXT("NoCollision"));
 	//m_Mesh->SetCollisionProfileName(TEXT("Projectile"));
 	//

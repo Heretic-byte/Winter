@@ -18,6 +18,8 @@ ABaseCharacter::ABaseCharacter()
 	m_fHealth = 100;
 	m_fMoveSpeed = 600;
 	m_fCrnHealth = 0;
+
+	SetActorScale3D(FVector(1.5f));
 }
 
 // Called when the game starts or when spawned

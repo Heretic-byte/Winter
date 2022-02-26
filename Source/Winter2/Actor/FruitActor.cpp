@@ -7,24 +7,19 @@
 // Sets default values
 AFruitActor::AFruitActor()
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.bCanEverTick = false;
 
 	m_fFoddExp = 1;
-}
 
-// Called when the game starts or when spawned
-void AFruitActor::BeginPlay()
-{
-	Super::BeginPlay();
-	
-}
+	m_Coll = CreateDefaultSubobject<UCapsuleComponent>(TEXT("m_Coll"));
+	m_Coll->InitCapsuleSize(60,130);
+	m_Coll->SetCollisionProfileName(TEXT("OverlapAll"));
+	m_Coll->SetCollisionResponseToChannel(ECollisionChannel::ECC_Visibility,ECollisionResponse::ECR_Block);
+	RootComponent = m_Coll;
 
-// Called every frame
-void AFruitActor::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
+	m_Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("m_Mesh"));
+	m_Mesh->SetupAttachment(m_Coll);
+	m_Mesh->SetCollisionProfileName(TEXT("NoCollision"));
 }
 
 void AFruitActor::OnInteract()
@@ -32,4 +27,6 @@ void AFruitActor::OnInteract()
 	PRINTF("AFruitActor::OnInteract()");
 
 	UMyLib::GetPlayer()->m_OnTakeExp.Broadcast(m_fFoddExp);
+
+	Destroy();
 }

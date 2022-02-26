@@ -36,8 +36,6 @@ AWinter2Character::AWinter2Character()
 	FP_Bow->SetRelativeLocation(FVector(79.5, 45.6, -5.7));//(X=79.500000,Y=45.599998,Z=-5.700012)
 	FP_Bow->SetChildActorClass(ABow::StaticClass());
 	
-	GunOffset = FVector(100.0f, 0.0f, 10.0f);
-
 	m_InterTarget = nullptr;
 }
 
