@@ -1,7 +1,7 @@
 #include "MyGameInstance.h"
-
 #include "Kismet/KismetSystemLibrary.h"
 #include "Winter2/MyLib.h"
+#include "Winter2/Winter2.h"
 
 UMyGameInstance* UMyGameInstance::Get = nullptr;
 
@@ -12,8 +12,8 @@ void UMyGameInstance::Init()
 	Get = this;
 
 	m_ZoneMoveManager = NewObject<ULevelManager>(this);
-	m_SpawnManager = NewObject<USpawnManager>(this);
-	m_PlayerStatManager = NewObject<UPlayerStatusManager>(this);
+
+	m_bIsPlayerWin = false;
 }
 
 void UMyGameInstance::LoadComplete(const float LoadTime, const FString& MapName)
@@ -37,4 +37,15 @@ void UMyGameInstance::StartGame()
 void UMyGameInstance::ExitGame()
 {
 	UKismetSystemLibrary::QuitGame(GetWorld(), UMyLib::GetPlayerCon(), EQuitPreference::Quit, true);
+}
+
+void UMyGameInstance::WinGame()
+{
+	PRINTF("UMyGameInstance::WinGame()!!");
+	m_bIsPlayerWin = true;
+}
+
+bool UMyGameInstance::IsPlayerWin()
+{
+	return m_bIsPlayerWin;
 }

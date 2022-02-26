@@ -35,6 +35,7 @@ ABow::ABow()
 	//SkeletalMesh'/Game/JungHo_Works/Bow.Bow'
 	m_fCharge = 0;
 	m_bIsCharging=false;
+	m_nArrowMaxCount = 5;
 }
 
 // Called when the game starts or when spawned
@@ -45,7 +46,7 @@ void ABow::BeginPlay()
 	m_BowMesh->SetAnimationMode(EAnimationMode::AnimationBlueprint);
 	m_BowMesh->SetAnimClass(m_ClassAnim);
 
-	Reload();
+	RecoverArrow();
 }
 
 // Called every frame
@@ -56,12 +57,15 @@ void ABow::Tick(float DeltaTime)
 	if(m_bIsCharging && m_fCharge < 1.f)
 	{
 		m_fCharge+=DeltaTime;
-		PRINTF("Charge:%.1f",m_fCharge);
 	}
 }
 
 void ABow::BeginCharge()
 {
+	if(m_Bullet == nullptr)
+	{
+		return;
+	}
 	m_fCharge = 0;
 
 	m_bIsCharging=true;
@@ -75,13 +79,16 @@ void ABow::EndCharge()
 		StopCharge();
 		return;
 	}
-	PRINTF("Fire:%.1f",m_fCharge);
 	m_Bullet->Fire(m_fCharge);
 	m_Bullet = nullptr;
 	
 	StopCharge();
+
+	m_nArrowCount--;
 	
-	Reload();
+	FTimerHandle Timer;
+
+	GetWorldTimerManager().SetTimer(Timer, this, &ABow::Reload, 0.75, false);
 }
 
 void ABow::StopCharge()
@@ -97,6 +104,10 @@ FVector ABow::GetBulletStartPoint()
 
 void ABow::Reload()
 {
+	if (m_nArrowCount < 1 || m_Bullet != nullptr)
+	{
+		return;
+	}
 	FVector SpawnLoc = GetBulletStartPoint();
 
 	FRotator SpawnRot = FRotator::ZeroRotator;
@@ -115,5 +126,37 @@ void ABow::Reload()
 float ABow::GetCharge()
 {
 	return m_fCharge;
+}
+
+void ABow::SetMaxArrow(int maxArrow)
+{
+	m_nArrowMaxCount = maxArrow;
+	PRINTF("ABow::SetMaxArrow:%d",m_nArrowMaxCount);
+}
+
+void ABow::SetCrnArrow(int crnArrow)
+{
+	m_nArrowCount = crnArrow;
+	PRINTF("ABow::RecoverArrow:%d",m_nArrowCount);
+
+	if(m_nArrowCount > 0 && m_Bullet == nullptr)
+	{
+		Reload();
+	}
+}
+
+void ABow::RecoverArrow()
+{
+	SetCrnArrow(m_nArrowMaxCount);
+}
+
+int ABow::GetCrnArrowCount()
+{
+	return m_nArrowCount;
+}
+
+int ABow::GetMaxArrowCount()
+{
+	return m_nArrowMaxCount;
 }
 

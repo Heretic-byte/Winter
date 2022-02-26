@@ -32,7 +32,7 @@ void AAnimal::BeginPlay()
 {
 	Super::BeginPlay();
 
-	UMyGameInstance::Get->m_SpawnManager->RegisterActor(this);
+	//UMyGameInstance::Get->m_SpawnManager->RegisterActor(this);
 
 	check(m_ClassAI);
 
@@ -106,8 +106,6 @@ void AAnimal::HomingRotateToTarget()
 
 void AAnimal::TryAttack()
 {
-	PRINTF("AAnimal::TryAttack()");
-
 	if (m_fAttackTimer > 0)
 	{
 		m_fAttackTimer -= m_fDeltaTime;
@@ -126,8 +124,6 @@ void AAnimal::DealDamage()
 	{
 		return;
 	}
-	PRINTF("AAnimal::DealDamage()");
-
 	FDamageEvent Event;
 	
 	GetFocusedTarget()->TakeDamage(m_fAtkDmg,Event,GetController(),this);
@@ -201,4 +197,17 @@ void AAnimal::OnDeathAnimEnd()
 bool AAnimal::HasTarget()
 {
 	return GetFocusedTarget() != nullptr;
+}
+
+void AAnimal::OnInteract()
+{
+	if(IsAlive())
+	{
+		return;
+	}
+	PRINTF("AAnimal::OnInteract()");
+
+	UMyLib::GetPlayer()->m_OnTakeExp.Broadcast(m_fFoodExp);
+
+	Destroy();
 }

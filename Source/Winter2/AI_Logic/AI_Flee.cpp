@@ -71,7 +71,7 @@ void UAI_Flee::CheckSetState()
 			return;
 		}
 
-		if (!CheckTargetRange(m_fAttackRangeSqr))
+		if ( m_CurrentState == EFSM::Flee && !CheckTargetRange(m_fAttackRangeSqr))
 		{
 			SetIdle();
 		}

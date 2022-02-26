@@ -4,8 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "LevelManager.h"
-#include "PlayerStatusManager.h"
-#include "SpawnManager.h"
 #include "Engine/GameInstance.h"
 #include "MyGameInstance.generated.h"
 
@@ -17,16 +15,14 @@ class WINTER2_API UMyGameInstance : public UGameInstance
 {
 	GENERATED_BODY()
 
+protected:
+	bool m_bIsPlayerWin;
 public:
 	static UMyGameInstance* Get;
 
 public:
 	UPROPERTY()
 	ULevelManager* m_ZoneMoveManager;
-	UPROPERTY()
-	USpawnManager* m_SpawnManager;
-	UPROPERTY()
-	UPlayerStatusManager* m_PlayerStatManager;
 	
 public:
 	virtual void Init() override;
@@ -36,4 +32,8 @@ public:
 	void StartGame();
 
 	void ExitGame();
+	
+	void WinGame();
+
+	bool IsPlayerWin();
 };

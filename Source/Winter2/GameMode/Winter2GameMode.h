@@ -13,6 +13,24 @@ class AWinter2GameMode : public AGameModeBase
 
 public:
 	AWinter2GameMode();
+
+protected:
+	float m_fTimePassed;
+	UPROPERTY(EditAnywhere,BlueprintReadOnly,DisplayName="Game Win, Sec, 600.f = 10 min")
+	float m_fGameWinTime;
+
+protected:
+	virtual void Tick(float DeltaSeconds) override;
+
+public:
+	UFUNCTION(BlueprintCallable)
+	float GetTimePassed();
+	UFUNCTION(BlueprintCallable)
+	float GetWinMaxTime();
+	UFUNCTION(BlueprintCallable)
+	float GetTimePercentOne();
+	UFUNCTION(BlueprintCallable)
+	FString UpdateTimePassed();
 };
 
 

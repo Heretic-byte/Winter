@@ -6,6 +6,8 @@
 #include "TextureResource.h"
 #include "CanvasItem.h"
 #include "UObject/ConstructorHelpers.h"
+#include "Winter2/MyLib.h"
+#include "Winter2/Actor/Pawn/Character/Winter2Character.h"
 
 AWinter2HUD::AWinter2HUD()
 {
@@ -28,8 +30,18 @@ void AWinter2HUD::DrawHUD()
 	const FVector2D CrosshairDrawPosition( (Center.X),
 										   (Center.Y + 20.0f));
 
-	// draw the crosshair
-	FCanvasTileItem TileItem( CrosshairDrawPosition, CrosshairTex->Resource, FLinearColor::White);
+
+	FLinearColor DrawColor = FLinearColor::White;
+
+	if(UMyLib::GetPlayer())
+	{
+		if(UMyLib::GetPlayer()->HasTarget())
+		{
+			DrawColor = FLinearColor(50,50,50,50);
+		}
+	}
+	
+	FCanvasTileItem TileItem( CrosshairDrawPosition, CrosshairTex->Resource, DrawColor);
 	TileItem.BlendMode = SE_BLEND_Translucent;
 	Canvas->DrawItem( TileItem );
 }

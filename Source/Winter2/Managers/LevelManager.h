@@ -28,9 +28,5 @@ public:
 	
 	bool IsGameStart();
 	
-	void HideCurrentLevel();
-
-	void ShowCurrentLevel();
-
 	const FName& GetMapID() const;
 };

@@ -124,6 +124,7 @@ void USensor_Base::UpdateAISensing()
 
 		if(!CheckDistAndAngle(Pawn))
 		{
+			//m_Owner->SetFocusedTarget(nullptr);
 			return;
 		}
 
