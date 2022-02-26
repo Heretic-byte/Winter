@@ -77,8 +77,11 @@ void ABow::EndCharge()
 	}
 	PRINTF("Fire:%.1f",m_fCharge);
 	m_Bullet->Fire(m_fCharge);
-
+	m_Bullet = nullptr;
+	
 	StopCharge();
+	
+	Reload();
 }
 
 void ABow::StopCharge()

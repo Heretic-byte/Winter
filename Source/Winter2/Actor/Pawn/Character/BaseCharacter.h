@@ -21,7 +21,8 @@ protected:
 	float m_fHealth;
 	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category = "APawn Stats")
 	float m_fMoveSpeed;
-	
+	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category = "APawn Stats")
+	float m_fCrnHealth;
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -30,7 +31,8 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-	
+
+	UFUNCTION(BlueprintCallable)
 	bool IsAlive();
 	
 	bool LineOfSightTo(const AActor* pawn);
@@ -38,4 +40,11 @@ public:
 	void SetActive(bool isActive);
 	
 	float GetSpeedPercentOne();
+
+	virtual float TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) override;
+
+	virtual void OnHpZero();
+
+	virtual bool HasTarget();
 };
+

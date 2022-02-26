@@ -37,6 +37,8 @@ public:
 	ABaseCharacter* m_Owner;
 	UPROPERTY(Transient,VisibleAnywhere,BlueprintReadWrite)
 	float m_fSpeedPercent;
+	UPROPERTY(Transient,VisibleAnywhere,BlueprintReadWrite)
+	bool m_bHasTarget;
 public:
 	virtual void NativeBeginPlay() override;
 
@@ -68,6 +70,7 @@ public:
 
 	UPROPERTY(Transient)
 	UBowAnimInstance* m_MyAnim = nullptr;
+	
 };
 
 UCLASS()
@@ -82,6 +85,7 @@ public:
 	ABow* m_Owner;
 	UPROPERTY(Transient,VisibleAnywhere,BlueprintReadWrite)
 	float m_fChargePercent;
+	
 public:
 	virtual void NativeBeginPlay() override;
 

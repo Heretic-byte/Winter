@@ -22,7 +22,8 @@ protected:
 	UStaticMeshComponent* m_Mesh;
 	UPROPERTY(VisibleDefaultsOnly, Category=Projectile)
 	UProjectileMovementComponent* m_ProMove;
-
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	UAudioComponent* m_SoundComp;
 public:
 	AWinter2Projectile();
 
@@ -30,5 +31,7 @@ public:
 
 	UFUNCTION()
 	void OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
+	UFUNCTION()
+	void OnAttachedActorDelete(AActor* destroyedActor );
 };
 

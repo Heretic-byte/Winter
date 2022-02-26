@@ -34,11 +34,27 @@ protected:
 	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category = "APawn Animal Stats")
 	float m_fAtkRange;
 	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category = "APawn Animal Stats")
+	float m_fAtkDmg;
+	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category = "APawn Animal Stats")
 	float m_fVisionRange;
 	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category = "APawn Animal Stats")
 	float m_fVisionAngle;
 	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category = "APawn Animal Stats")
 	float m_fFoodExp;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	UAudioComponent* m_SoundComp;
+	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category = "APawn Animal Stats")
+	UAnimMontage* m_TakeHitMontage;
+	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category = "APawn Animal Stats")
+	UAnimMontage* m_DeathMontage;
+	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category = "APawn Animal Stats")
+	UAnimMontage* m_AttackMontage;
+
+	FTimerHandle m_DeathAnimTimer;
+
+	float m_fAttackTimer;
+
+	float m_fDeltaTime;
 	
 protected:
 	virtual void BeginPlay() override;
@@ -61,8 +77,19 @@ public:
 	void HomingRotateToTarget();
 	
 	void TryAttack();
+
+	void DealDamage();
 	
 	void StopMove();
+
+	virtual void OnHpZero() override;
+
+	virtual float TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) override;
+
+	void OnDeathAnimEnd();
+
+	virtual bool HasTarget() override;
 };
+
 
 
