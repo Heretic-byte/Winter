@@ -3,6 +3,7 @@
 
 #include "BaseCharacter.h"
 
+#include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/PawnMovementComponent.h"
 
 // Sets default values
@@ -13,7 +14,7 @@ ABaseCharacter::ABaseCharacter()
 
 	GetMesh()->SetRelativeLocation(FVector(0, 0, -88));
 	GetMesh()->SetRelativeRotation(FRotator(0, -90.f, 0.f));
-
+	GetCharacterMovement()->bEnablePhysicsInteraction = false;
 	m_fHealth = 100;
 	m_fMoveSpeed = 600;
 }

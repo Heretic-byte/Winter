@@ -1,12 +1,10 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-
 #include "SpawnManager.h"
-
 #include "Components/CapsuleComponent.h"
 #include "Winter2/MyLib.h"
-#include "Winter2/Winter2Character.h"
 #include "Winter2/Actor/Pawn/Character/BaseCharacter.h"
+#include "Winter2/Actor/Pawn/Character/Winter2Character.h"
 
 
 USpawnManager::USpawnManager()

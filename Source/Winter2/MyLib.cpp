@@ -1,5 +1,5 @@
 #include "MyLib.h"
-#include "Winter2Character.h"
+#include "Actor/Pawn/Character/Winter2Character.h"
 #include "Kismet/GameplayStatics.h"
 #include "Managers/MyGameInstance.h"
 
