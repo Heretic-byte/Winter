@@ -1,10 +1,13 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
 #include "Winter2Projectile.h"
+
+#include "Components/AudioComponent.h"
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "Components/SphereComponent.h"
 #include "Pawn/Character/Animal.h"
 #include "Pawn/Character/Winter2Character.h"
+#include "Winter2/MyLib.h"
 
 AWinter2Projectile::AWinter2Projectile() 
 {
@@ -31,7 +34,11 @@ AWinter2Projectile::AWinter2Projectile()
 	m_ProMove->SetUpdatedComponent(RootComponent);
 	m_ProMove->bRotationFollowsVelocity = true;
 	m_ProMove->bSimulationEnabled = false;
-	m_Mesh->OnComponentHit.AddDynamic(this, &AWinter2Projectile::OnHit);	
+	m_Mesh->OnComponentHit.AddDynamic(this, &AWinter2Projectile::OnHit);
+
+	m_SoundComp = CreateDefaultSubobject<UAudioComponent>(TEXT("m_SoundComp"));
+	m_SoundComp->SetupAttachment(RootComponent);
+	m_SoundComp->SetAutoActivate(false);
 }
 
 void AWinter2Projectile::Fire(float powerMaxOne)
@@ -65,11 +72,24 @@ void AWinter2Projectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor,
 		FName BondName = Mob->GetMesh()->FindClosestBone(Hit.Location);
 		
 		AttachToComponent(Mob->GetMesh(),Rules,BondName);
+
+		FDamageEvent Event;
+
+		Mob->TakeDamage(1,Event,UMyLib::GetPlayerCon(),UMyLib::GetPlayer());
+		
+		m_SoundComp->Play();
 	}
 	else
 	{
 		AttachToComponent(OtherComp,Rules);	
 	}
 
+	OtherActor->OnDestroyed.AddDynamic(this, &AWinter2Projectile::OnAttachedActorDelete);
+
 	CollisionComp->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+}
+
+void AWinter2Projectile::OnAttachedActorDelete(AActor* destroyedActor)
+{
+	Destroy();
 }

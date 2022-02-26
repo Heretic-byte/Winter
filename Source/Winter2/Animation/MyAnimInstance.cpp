@@ -38,6 +38,7 @@ void UMyAnimInstance::UpdateFlags()
 	}
 #endif
 	m_fSpeedPercent=m_Owner->GetSpeedPercentOne();
+	m_bHasTarget=m_Owner->HasTarget();
 }
 
 void FBowAnimInstanceProxy::InitializeObjects(UAnimInstance* InAnimInstance)
@@ -76,4 +77,5 @@ void UBowAnimInstance::UpdateFlags()
 	}
 #endif
 	m_fChargePercent=m_Owner->GetCharge();
+	
 }

@@ -88,17 +88,28 @@ float ABaseCharacter::GetSpeedPercentOne()
 	return  VelSqr / MaxSqr;
 }
 
-void ABaseCharacter::TakeDmg(float dmg)
+float ABaseCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator,
+	AActor* DamageCauser)
 {
-	m_fCrnHealth -= dmg;
+	float Result = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
+
+	m_fCrnHealth -= DamageAmount;
 
 	if (m_fCrnHealth <= 0)
 	{
 		OnHpZero();
 	}
+
+
+	return Result;
 }
 
 void ABaseCharacter::OnHpZero()
 {
 	
+}
+
+bool ABaseCharacter::HasTarget()
+{
+	return false;
 }

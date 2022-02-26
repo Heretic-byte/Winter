@@ -21,7 +21,7 @@ protected:
 	float m_fHealth;
 	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category = "APawn Stats")
 	float m_fMoveSpeed;
-
+	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category = "APawn Stats")
 	float m_fCrnHealth;
 protected:
 	// Called when the game starts or when spawned
@@ -41,9 +41,10 @@ public:
 	
 	float GetSpeedPercentOne();
 
-	UFUNCTION(BlueprintCallable)
-	virtual void TakeDmg(float dmg);
-	
+	virtual float TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) override;
+
 	virtual void OnHpZero();
+
+	virtual bool HasTarget();
 };
 
