@@ -105,6 +105,15 @@ void UAI_Flee::OnIdle()
 		return;
 	}
 
+	int RandIndex = FMath::RandRange(0,4);
+
+	if(RandIndex == 0)
+	{
+		m_Owner->PlayRandIdleMotion();
+		m_fIdleTimer = FMath::FRandRange(3.f, 7.f);
+		return;
+	}
+
 	FNavLocation Result;
 
 	if (EPathFollowingStatus::Idle == Status)

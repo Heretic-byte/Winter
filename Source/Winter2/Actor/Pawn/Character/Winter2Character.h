@@ -39,6 +39,8 @@ protected:
 	USoundBase* FireSound;
 	UPROPERTY(VisibleDefaultsOnly, Category = Mesh)
 	UChildActorComponent* FP_Bow;
+	UPROPERTY(VisibleDefaultsOnly, Category = Mesh)
+	UParticleSystemComponent* m_SnowEffect;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	UCameraComponent* FirstPersonCameraComponent;
 	UPROPERTY()

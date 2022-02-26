@@ -24,8 +24,8 @@ AWinter2Projectile::AWinter2Projectile()
 	m_Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("m_Mesh"));
 	m_Mesh->SetupAttachment(RootComponent);
 	m_Mesh->SetStaticMesh(Found.Object);
-	m_Mesh->SetRelativeScale3D(FVector(0.3,0.8,0.8));
-	m_Mesh->SetRelativeLocation(FVector(-30,0,0));
+	m_Mesh->SetRelativeScale3D(FVector(0.4,0.8,0.8));
+	m_Mesh->SetRelativeLocation(FVector(-40,0,0));
 	m_Mesh->SetCollisionProfileName(TEXT("NoCollision"));
 	//m_Mesh->SetCollisionProfileName(TEXT("Projectile"));
 	//
@@ -38,6 +38,10 @@ AWinter2Projectile::AWinter2Projectile()
 	m_SoundComp = CreateDefaultSubobject<UAudioComponent>(TEXT("m_SoundComp"));
 	m_SoundComp->SetupAttachment(RootComponent);
 	m_SoundComp->SetAutoActivate(false);
+
+	static ConstructorHelpers::FObjectFinder<USoundBase> FoundSound(TEXT("SoundWave'/Game/JungHo_Works/Use/Fantasy_Game_Weapon_Impact.Fantasy_Game_Weapon_Impact'"));
+	
+	
 }
 
 void AWinter2Projectile::Fire(float powerMaxOne)
