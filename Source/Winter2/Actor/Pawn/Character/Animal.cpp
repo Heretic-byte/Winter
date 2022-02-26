@@ -43,9 +43,6 @@ void AAnimal::BeginPlay()
 	m_Sensor = NewObject<USensor_Base>(this);
 
 	m_Sensor->Init(this, m_fVisionRange,m_fVisionAngle);
-
-	GetCharacterMovement()->MaxWalkSpeed = m_fMoveSpeed;
-	
 }
 
 void AAnimal::Tick(float DeltaSeconds)
