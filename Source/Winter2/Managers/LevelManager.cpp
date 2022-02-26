@@ -25,16 +25,6 @@ bool ULevelManager::IsGameStart()
 	return true;
 }
 
-void ULevelManager::HideCurrentLevel()
-{
-	UMyGameInstance::Get->m_SpawnManager->HideActors();
-}
-
-void ULevelManager::ShowCurrentLevel()
-{
-	UMyGameInstance::Get->m_SpawnManager->ShowActors();
-}
-
 const FName& ULevelManager::GetMapID() const
 {
 	return m_MapID;

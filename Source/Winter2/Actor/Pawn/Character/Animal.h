@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "BaseCharacter.h"
 #include "Navigation/PathFollowingComponent.h"
+#include "Winter2/Interactable.h"
 #include "Winter2/AI_Logic/AI_Base.h"
 #include "Winter2/AI_Logic/AI_Flee.h"
 #include "Winter2/AI_Logic/Sensor_Base.h"
@@ -14,7 +15,7 @@
  * 
  */
 UCLASS()
-class WINTER2_API AAnimal : public ABaseCharacter
+class WINTER2_API AAnimal : public ABaseCharacter,public IInteractable
 {
 	GENERATED_BODY()
 
@@ -89,6 +90,8 @@ public:
 	void OnDeathAnimEnd();
 
 	virtual bool HasTarget() override;
+
+	virtual void OnInteract() override;
 };
 
 

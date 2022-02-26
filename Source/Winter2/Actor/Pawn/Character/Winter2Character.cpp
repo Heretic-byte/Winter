@@ -7,7 +7,9 @@
 #include "Components/InputComponent.h"
 #include "GameFramework/InputSettings.h"
 #include "Kismet/GameplayStatics.h"
+#include "Winter2/Interactable.h"
 #include "Winter2/Actor/Winter2Projectile.h"
+#include "Winter2/Managers/MyGameInstance.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogFPChar, Warning, All);
 
@@ -30,18 +32,26 @@ AWinter2Character::AWinter2Character()
 
 	FP_Bow = CreateDefaultSubobject<UChildActorComponent>(TEXT("m_Bow"));
 	FP_Bow->SetupAttachment(FirstPersonCameraComponent);
-	FP_Bow->SetRelativeRotation(FRotator(0, 0, 0));
+	FP_Bow->SetRelativeRotation(FRotator(0, -1.5, 0));
 	FP_Bow->SetRelativeLocation(FVector(79.5, 45.6, -5.7));//(X=79.500000,Y=45.599998,Z=-5.700012)
 	FP_Bow->SetChildActorClass(ABow::StaticClass());
 	
 	GunOffset = FVector(100.0f, 0.0f, 10.0f);
+
+	m_InterTarget = nullptr;
 }
 
 void AWinter2Character::BeginPlay()
 {
 	Super::BeginPlay();
-	
-	m_Bow =  Cast<ABow>(FP_Bow->GetChildActor());
+	//InitBow(5);
+}
+
+void AWinter2Character::Tick(float DeltaSeconds)
+{
+	Super::Tick(DeltaSeconds);
+
+	CheckTraceInteractable();
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -56,7 +66,7 @@ void AWinter2Character::SetupPlayerInputComponent(class UInputComponent* PlayerI
 	PlayerInputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
 
 	// Bind fire event
-	PlayerInputComponent->BindAction("Fire", IE_Pressed, this, &AWinter2Character::OnFire);
+	PlayerInputComponent->BindAction("TryInteract", IE_Pressed, this, &AWinter2Character::TryInteract);
 	PlayerInputComponent->BindAction("Charge", IE_Pressed, this, &AWinter2Character::OnBeginCharge);
 	PlayerInputComponent->BindAction("Charge", IE_Released, this, &AWinter2Character::OnEndCharge);
 
@@ -68,9 +78,43 @@ void AWinter2Character::SetupPlayerInputComponent(class UInputComponent* PlayerI
 	PlayerInputComponent->BindAxis("LookUpRate", this, &AWinter2Character::LookUpAtRate);
 }
 
-void AWinter2Character::OnFire()
+float AWinter2Character::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator,
+	AActor* DamageCauser)
 {
+	if(UMyGameInstance::Get->IsPlayerWin())
+	{
+		return 0;
+	}
+	return Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
+}
+
+void AWinter2Character::CheckTraceInteractable()
+{
+	FVector ViewPoint = FirstPersonCameraComponent->GetComponentLocation();
+
+	FCollisionQueryParams CollisionParms(SCENE_QUERY_STAT(LineOfSight), false, this);
 	
+	CollisionParms.AddIgnoredActor(this);
+	
+	FVector TargetLocation = (FirstPersonCameraComponent->GetForwardVector() * 400) + ViewPoint;
+
+	FHitResult Hits;
+	
+	if(!GetWorld()->LineTraceSingleByChannel(Hits,ViewPoint, TargetLocation, ECC_Visibility, CollisionParms))
+	{
+		m_InterTarget = nullptr;
+		return;
+	}
+	
+	IInteractable* Inter = Cast<IInteractable>(Hits.Actor);
+
+	if(!Inter)
+	{
+		m_InterTarget = nullptr;
+		return;
+	}
+	
+	m_InterTarget = Inter;
 }
 
 void AWinter2Character::OnBeginCharge()
@@ -111,4 +155,47 @@ void AWinter2Character::LookUpAtRate(float Rate)
 {
 	// calculate delta for this frame from the rate information
 	AddControllerPitchInput(Rate * BaseLookUpRate * GetWorld()->GetDeltaSeconds());
+}
+
+int AWinter2Character::GetArrowCrnCount() const
+{
+	return m_Bow->GetCrnArrowCount();
+}
+
+int AWinter2Character::GetArrowMaxCount() const
+{
+	return m_Bow->GetMaxArrowCount();
+}
+
+void AWinter2Character::RecoverArrowCount() const
+{
+	m_Bow->RecoverArrow();
+}
+
+void AWinter2Character::SetArrowMaxCount(int max)
+{
+	m_Bow->SetMaxArrow(max);
+}
+
+void AWinter2Character::InitBow(int initMax)
+{
+	m_Bow =  Cast<ABow>(FP_Bow->GetChildActor());
+
+	SetArrowMaxCount(initMax);
+}
+
+bool AWinter2Character::HasTarget()
+{
+	return m_InterTarget != nullptr;
+}
+
+void AWinter2Character::TryInteract()
+{
+	if(!m_InterTarget)
+	{
+		return;
+	}
+
+	m_InterTarget->OnInteract();
+	m_InterTarget = nullptr;
 }

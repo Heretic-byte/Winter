@@ -29,10 +29,6 @@
 	],
 	"Plugins": [
 		{
-			"Name": "NPCPalette",
-			"Enabled": true
-		},
-		{
 			"Name": "OculusVR",
 			"Enabled": false,
 			"SupportedTargetPlatforms": [

@@ -29,6 +29,10 @@ protected:
 	float m_fCharge;
 	UPROPERTY()
 	bool m_bIsCharging;
+	UPROPERTY()
+	int m_nArrowCount;
+	UPROPERTY()
+	int m_nArrowMaxCount;
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -50,4 +54,15 @@ public:
 	void Reload();
 
 	float GetCharge();
+
+public:
+	void SetMaxArrow(int maxArrow);
+
+	void SetCrnArrow(int crnArrow);
+
+	void RecoverArrow();
+
+	int GetCrnArrowCount();
+
+	int GetMaxArrowCount();
 };
