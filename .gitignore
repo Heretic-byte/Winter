@@ -42,14 +42,15 @@
 .VC.db
 .VC.opendb
 
-#Binaries/*
+Binaries/*
 Build/*
 Intermediate/*
 .idea/*
-#Plugins/*/Binaries/*
+Plugins/*/Binaries/*
 Plugins/*/Build/*
 Plugins/*/Intermediate/*
 
 Content/WinterForest/*
 
 *.7z
+Saved/*
