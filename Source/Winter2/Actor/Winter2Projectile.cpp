@@ -91,7 +91,7 @@ void AWinter2Projectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor,
 
 		m_SoundComp->Play();
 
-		UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), m_BleedEffect, GetRootComponent()->GetComponentLocation(),GetRootComponent()->GetComponentRotation(),FVector(2.2f));
+		UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), m_BleedEffect, GetRootComponent()->GetComponentLocation(),GetRootComponent()->GetComponentRotation(),FVector(6.0f));
 	}
 	else
 	{
