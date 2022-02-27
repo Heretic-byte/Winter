@@ -115,9 +115,8 @@ void UAI_Aggresive::OnIdle()
 
 	int RandIndex = FMath::RandRange(0,4);
 
-	if(RandIndex == 0)
+	if(RandIndex == 0 && m_Owner->PlayRandIdleMotion())
 	{
-		m_Owner->PlayRandIdleMotion();
 		m_fIdleTimer = FMath::FRandRange(3.f, 7.f);
 		return;
 	}

@@ -2,6 +2,8 @@
 #include "Actor/Pawn/Character/Winter2Character.h"
 #include "Kismet/GameplayStatics.h"
 #include "Managers/MyGameInstance.h"
+#include "Widgets/MenuCanvas.h"
+#include "Widgets/Winter2HUD.h"
 
 UWorld* UMyLib::GetUWorld()
 {
@@ -18,12 +20,12 @@ AMyPlayerController* UMyLib::GetPlayerCon()
 	return Cast<AMyPlayerController>( UGameplayStatics::GetPlayerController(GetUWorld(),0));
 }
 
-//UWidgetCanvasWorld* UMyLib::GetCanvas()
-//{
-//	AMyHUD* HUD = Cast<AMyHUD>(GetPlayerCon()->GetHUD());
-//                                                                                                                                       
-//	return HUD->GetCanvas();                                                                                                               
-//}
+UMenuCanvas* UMyLib::GetMenuCanvas()
+{
+	AWinter2HUD* HUD = Cast<AWinter2HUD>(GetPlayerCon()->GetHUD());
+                                                                                                                                      
+	return HUD->GetCanvas();                                                                                                               
+}
 
 float UMyLib::SetFloatPrecision(float TheFloat, int32 Precision)
 {
@@ -240,4 +242,19 @@ bool UMyLib::SphereOverlapComponents(UObject* WorldContextObject,FRotator Rot , 
 	}
 
 	return (OutComponents.Num() > 0);
+}
+
+void UMyLib::ShowMenuPause()
+{
+	GetMenuCanvas()->OpenAsPause();
+}
+
+void UMyLib::ShowMenuWin()
+{
+	GetMenuCanvas()->OpenAsWin();
+}
+
+void UMyLib::ShowMenuLose()
+{
+	GetMenuCanvas()->OpenAsLose();
 }

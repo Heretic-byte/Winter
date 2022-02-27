@@ -26,7 +26,10 @@ ABaseCharacter::ABaseCharacter()
 void ABaseCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+	
 	m_fCrnHealth = m_fHealth;
+	
+	GetCharacterMovement()->MaxWalkSpeed = m_fMoveSpeed;
 }
 
 // Called every frame

@@ -18,6 +18,8 @@ void UMyGameInstance::Init()
 
 void UMyGameInstance::LoadComplete(const float LoadTime, const FString& MapName)
 {
+	SetPlayerWinFalse();
+	
 	if(MapName!=TEXT("InitLevel"))
 	{
 		if(m_ZoneMoveManager->IsGameStart())
@@ -29,9 +31,14 @@ void UMyGameInstance::LoadComplete(const float LoadTime, const FString& MapName)
 
 void UMyGameInstance::StartGame()
 {
-	m_ZoneMoveManager->OpenMyLevel(TEXT("WinterLevel"));
+	OpenMap(TEXT("WinterLevel"));
 
 	UKismetSystemLibrary::ControlScreensaver(false);
+}
+
+void UMyGameInstance::OpenMap(FName mapName)
+{
+	m_ZoneMoveManager->OpenMyLevel(mapName);
 }
 
 void UMyGameInstance::ExitGame()
@@ -48,4 +55,9 @@ void UMyGameInstance::WinGame()
 bool UMyGameInstance::IsPlayerWin()
 {
 	return m_bIsPlayerWin;
+}
+
+void UMyGameInstance::SetPlayerWinFalse()
+{
+	m_bIsPlayerWin = false;
 }

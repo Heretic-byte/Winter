@@ -12,6 +12,7 @@
 //#include "Widgets/HUDs/MyHUD.h"
 #include "MyLib.generated.h"
 
+class UMenuCanvas;
 class AWinter2Character;
 /**
  * 
@@ -28,7 +29,7 @@ public:
 
 	static AMyPlayerController* GetPlayerCon();
 
-	//static UWidgetCanvasWorld* GetCanvas();
+	static UMenuCanvas* GetMenuCanvas();
 
 	//static UWidgetCanvasGameLevel* GetMainWidget();
 
@@ -58,5 +59,14 @@ public:
 
 	static bool SphereOverlapActors(UObject* WorldContextObject,FRotator Rot ,const FVector SpherePos, float SphereRadius, const TArray<TEnumAsByte<EObjectTypeQuery> > & ObjectTypes, UClass* ActorClassFilter, const TArray<AActor*>& ActorsToIgnore, TArray<AActor*>& OutActors);
 
-	static bool SphereOverlapComponents(UObject* WorldContextObject,FRotator Rot , const FVector SpherePos, float SphereRadius, const TArray<TEnumAsByte<EObjectTypeQuery> > & ObjectTypes, UClass* ComponentClassFilter, const TArray<AActor*>& ActorsToIgnore, TArray<UPrimitiveComponent*>& OutComponents);	
+	static bool SphereOverlapComponents(UObject* WorldContextObject,FRotator Rot , const FVector SpherePos, float SphereRadius, const TArray<TEnumAsByte<EObjectTypeQuery> > & ObjectTypes, UClass* ComponentClassFilter, const TArray<AActor*>& ActorsToIgnore, TArray<UPrimitiveComponent*>& OutComponents);
+
+	UFUNCTION(BlueprintCallable, Category = "Winter Menu")
+	static void ShowMenuPause();
+
+	UFUNCTION(BlueprintCallable, Category = "Winter Menu")
+	static void ShowMenuWin();
+
+	UFUNCTION(BlueprintCallable, Category = "Winter Menu")
+	static void ShowMenuLose();
 };

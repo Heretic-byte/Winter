@@ -31,9 +31,13 @@ public:
 	
 	void StartGame();
 
+	void OpenMap(FName mapName);
+
 	void ExitGame();
 	
 	void WinGame();
 
 	bool IsPlayerWin();
+
+	void  SetPlayerWinFalse();
 };

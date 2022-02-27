@@ -2,16 +2,14 @@
 
 
 #include "MyPlayerController.h"
-
+#include "Winter2/MyLib.h"
 #include "Winter2/Winter2.h"
+#include "Winter2/Widgets/MenuCanvas.h"
 //InputComponent->BindAction("Exit", EInputEvent::IE_Pressed, this, &ADiabloPlayerController::ExitGame);
 AMyPlayerController::AMyPlayerController()
 {
 	//CheatClass = UMyCheatManager::StaticClass();
-	
-	bShowMouseCursor = true;
-
-	SetHidden(false);
+	bShowMouseCursor = false;
 }
 
 void AMyPlayerController::SetupInputComponent()
@@ -23,4 +21,5 @@ void AMyPlayerController::SetupInputComponent()
 void AMyPlayerController::OnPressEsc()
 {
 	PRINTF("AMyPlayerController::OnPressEsc");
+	UMyLib::GetMenuCanvas()->OpenAsPause();
 }

@@ -95,7 +95,7 @@ public:
 
 	virtual void OnInteract() override;
 
-	void PlayRandIdleMotion();
+	bool PlayRandIdleMotion();
 };
 
 

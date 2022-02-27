@@ -43,9 +43,6 @@ void AAnimal::BeginPlay()
 	m_Sensor = NewObject<USensor_Base>(this);
 
 	m_Sensor->Init(this, m_fVisionRange,m_fVisionAngle);
-
-	GetCharacterMovement()->MaxWalkSpeed = m_fMoveSpeed;
-	
 }
 
 void AAnimal::Tick(float DeltaSeconds)
@@ -212,13 +209,15 @@ void AAnimal::OnInteract()
 	Destroy();
 }
 
-void AAnimal::PlayRandIdleMotion()
+bool AAnimal::PlayRandIdleMotion()
 {
 	if(m_AryIdleAnim.Num()<1)
 	{
-		return;
+		return false;
 	}
 	int RandIndex = FMath::RandRange(0,m_AryIdleAnim.Num() -1);
 
 	PlayAnimMontage(m_AryIdleAnim[RandIndex]);
+
+	return true;
 }
