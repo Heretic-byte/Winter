@@ -5,9 +5,12 @@
 #include "Components/AudioComponent.h"
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "Components/SphereComponent.h"
+#include "Particles/ParticleSystemComponent.h"
 #include "Pawn/Character/Animal.h"
 #include "Pawn/Character/Winter2Character.h"
 #include "Winter2/MyLib.h"
+#include "NiagaraComponent.h"
+#include "NiagaraFunctionLibrary.h"
 
 AWinter2Projectile::AWinter2Projectile() 
 {
@@ -40,8 +43,14 @@ AWinter2Projectile::AWinter2Projectile()
 	m_SoundComp->SetAutoActivate(false);
 
 	static ConstructorHelpers::FObjectFinder<USoundBase> FoundSound(TEXT("SoundWave'/Game/JungHo_Works/Use/Fantasy_Game_Weapon_Impact.Fantasy_Game_Weapon_Impact'"));
+
 	
 	m_SoundComp->SetSound(FoundSound.Object);
+	//
+
+	static ConstructorHelpers::FObjectFinder<UNiagaraSystem> FoundEffect(TEXT("NiagaraSystem'/Game/NeetKing_Works/FX/FX_Blood/FX_Blood.FX_Blood'"));
+
+	m_BleedEffect = FoundEffect.Object;
 }
 
 void AWinter2Projectile::Fire(float powerMaxOne)
@@ -79,8 +88,10 @@ void AWinter2Projectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor,
 		FDamageEvent Event;
 
 		Mob->TakeDamage(1,Event,UMyLib::GetPlayerCon(),UMyLib::GetPlayer());
-		
+
 		m_SoundComp->Play();
+
+		UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), m_BleedEffect, GetRootComponent()->GetComponentLocation(),GetRootComponent()->GetComponentRotation(),FVector(2.2f));
 	}
 	else
 	{

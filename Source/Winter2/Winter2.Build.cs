@@ -12,14 +12,14 @@ public class Winter2 : ModuleRules
 		{
 			"Core", "CoreUObject", "Engine", 
 			"InputCore", "AIModule","NavigationSystem"
-			,"BUITween"
+			,"BUITween","Niagara","NiagaraCore"
 		});// ,"RVOMovement","CustomSlates"
 
 		// Uncomment if you are using Slate UI
 		PrivateDependencyModuleNames.AddRange(new string[]
 		{
 			"Slate", "SlateCore"
-			,"BUITween"
+			,"BUITween","Niagara","NiagaraCore"
 		});
 
 	}

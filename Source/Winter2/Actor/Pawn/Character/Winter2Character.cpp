@@ -3,6 +3,7 @@
 #include "Winter2Character.h"
 #include "Animation/AnimInstance.h"
 #include "Camera/CameraComponent.h"
+#include "Components/AudioComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/InputComponent.h"
 #include "GameFramework/InputSettings.h"
@@ -30,8 +31,6 @@ AWinter2Character::AWinter2Character()
 	FirstPersonCameraComponent->SetupAttachment(GetCapsuleComponent());
 	FirstPersonCameraComponent->SetRelativeLocation(FVector(-39.56f, 1.75f, 64.f)); // Position the camera
 	FirstPersonCameraComponent->bUsePawnControlRotation = true;
-
-
 	
 	m_InterTarget = nullptr;
 
@@ -40,6 +39,14 @@ AWinter2Character::AWinter2Character()
 	m_SnowEffect = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("m_SnowEffect"));
 	m_SnowEffect->SetupAttachment(RootComponent);
 	m_SnowEffect->SetTemplate(FoundEffect.Object);
+	
+	static ConstructorHelpers::FObjectFinder<USoundBase> Sound01(TEXT("SoundWave'/Game/JungHo_Works/Use/Fantasy_Game_Gear_Inventory_UI_3.Fantasy_Game_Gear_Inventory_UI_3'"));
+	m_SoundComp = CreateDefaultSubobject<UAudioComponent>(TEXT("m_SoundComp"));
+	m_SoundComp->SetupAttachment(RootComponent);
+	m_SoundComp->SetAutoActivate(false);
+	m_SoundComp->SetSound(Sound01.Object);
+	
+	
 }//ParticleSystem'/Game/Effects/Fx_Snow/ParticleSystems/P_cameraParentedSnowBox.P_cameraParentedSnowBox'
 
 void AWinter2Character::BeginPlay()
@@ -207,7 +214,7 @@ void AWinter2Character::TryInteract()
 	{
 		return;
 	}
-
+	m_SoundComp->Play();
 	m_InterTarget->OnInteract();
 	m_InterTarget = nullptr;
 }

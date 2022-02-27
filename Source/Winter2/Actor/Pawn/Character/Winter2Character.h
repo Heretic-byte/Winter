@@ -35,12 +35,12 @@ protected:
 	float BaseTurnRate;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Camera)
 	float BaseLookUpRate;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Gameplay)
-	USoundBase* FireSound;
 	UPROPERTY(VisibleAnywhere,BlueprintReadWrite, Category = Gameplay)
 	UParticleSystemComponent* m_SnowEffect;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	UCameraComponent* FirstPersonCameraComponent;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	UAudioComponent* m_SoundComp;
 	UPROPERTY()
 	ABow* m_Bow;
 
@@ -89,6 +89,8 @@ public:
 	virtual bool HasTarget() override;
 
 	void TryInteract();
+	
+	
 };
 
 
